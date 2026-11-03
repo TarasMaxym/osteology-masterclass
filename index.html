@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JUMC Osteology &amp; Pins Masterclass — Test 1 Crunch Engine</title>
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-cluster">
+      <div class="brand-logo">🦴</div>
+      <div>
+        <div class="brand-title">OSTEOLOGY &amp; PINS MASTERCLASS</div>
+        <div class="brand-sub" id="countdownBar">Loading exam countdown...</div>
+      </div>
+    </div>
+
+    <nav class="mode-tabs" id="modeTabs" aria-label="Study Modes">
+      <button class="mode-tab active" data-mode="grind" title="Alt+1: 30s Timed Pin Grinder + Smart Anatomical Grader">
+        <span class="tab-key">1</span> Pin Grinder
+      </button>
+      <button class="mode-tab" data-mode="reverse" title="Alt+2: Click directly on unlabeled bone/skull photos">
+        <span class="tab-key">2</span> Drop the Pin
+      </button>
+      <button class="mode-tab" data-mode="blitz" title="Alt+3: Rapid-fire keyboard recognition (Space + 1/2/3)">
+        <span class="tab-key">3</span> Speed Blitz
+      </button>
+      <button class="mode-tab" data-mode="exam" title="Alt+4: 20-Pin, 30s strict Practical Exam Simulator">
+        <span class="tab-key">4</span> 20-Pin Mock
+      </button>
+      <button class="mode-tab" data-mode="gaps" title="Alt+5: Unpinned Carpals/Tarsals/Ligaments + Tendon &amp; Muscle Drills">
+        <span class="tab-key">5</span> Tendons &amp; Gaps
+      </button>
+      <button class="mode-tab" data-mode="atlas" title="Alt+6: Interactive 103-Slide Specimen Atlas &amp; Weak-Spot Radar">
+        <span class="tab-key">6</span> Atlas &amp; Radar
+      </button>
+      <button class="mode-tab" data-mode="boneid" title="Alt+7: At-a-Glance Bone ID, Left vs Right Trainer &amp; Vertebrae/Carpal/Tarsal Discrimination">
+        <span class="tab-key">7</span> Bone &amp; Side ID
+      </button>
+    </nav>
+
+    <div class="readiness-cluster" id="readinessCluster" title="Click to open Weak-Spot Radar">
+      <div class="readiness-top">
+        <span class="readiness-label">Exam Readiness</span>
+        <span class="readiness-pct" id="readinessPct">0%</span>
+      </div>
+      <div class="readiness-bar">
+        <div class="rbar-seg seg-mastered" id="barMastered" style="width:0%"></div>
+        <div class="rbar-seg seg-learning" id="barLearning" style="width:0%"></div>
+        <div class="rbar-seg seg-red" id="barRed" style="width:0%"></div>
+      </div>
+      <div class="readiness-counts" id="readinessCounts">0 mastered · 0 weak · 407 unseen</div>
+    </div>
+  </header>
+
+  <!-- Shared Filter Strip for Grinder / Drop-the-Pin / Speed Blitz -->
+  <section class="filter-strip" id="filterStrip">
+    <div class="filter-group">
+      <label>Deck</label>
+      <div class="pill-group" id="deckFilterGroup">
+        <button class="pill active" data-deck="ALL">All (407)</button>
+        <button class="pill" data-deck="BONES">Bones 1–5 (283)</button>
+        <button class="pill" data-deck="SKULL">Skull 6–9 (124)</button>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <label>Target Queue</label>
+      <select id="queueFilterSelect" class="ctrl-select">
+        <option value="adaptive">⚡ Adaptive Smart Queue (Weak + High-Yield)</option>
+        <option value="red">🔴 Red Zone Only (Missed / Slow / Confused)</option>
+        <option value="unseen">🆕 Unseen Pins Only</option>
+        <option value="highyield">🔥 Top Exam-Weight Bones (Femur/Tibia/Talus/Skull Base...)</option>
+        <option value="tendon_muscle">💪 Tendon Grooves &amp; Muscle Tuberosities Only (81)</option>
+        <option value="neurovascular">🧠 Foramina, Canals &amp; Vascular Grooves Only (49)</option>
+        <option value="ligament">🔗 Bony Ligament Attachments Only (24)</option>
+        <option value="bookmarked">★ Bookmarked / Flagged Pins</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label>Bone / Lab</label>
+      <select id="boneFilterSelect" class="ctrl-select">
+        <option value="ALL">All Bones &amp; Labs (Mixed Orientation)</option>
+      </select>
+    </div>
+
+    <div class="filter-toggles">
+      <button class="toggle-chip active" id="btnSpotlight" title="Shortcut [S]: Dim sibling arrows so active pin jumps out instantly">
+        <span>🎯</span> Spotlight <kbd>S</kbd>
+      </button>
+      <button class="toggle-chip" id="btnAutoZoom" title="Shortcut [Z]: Zoom smoothly toward active pin">
+        <span>🔍</span> Zoom <kbd>Z</kbd>
+      </button>
+      <button class="toggle-chip active" id="btnBlindBone" title="Shortcut [B]: Hide bone name until answered to train fragment orientation">
+        <span>🕶️</span> Blind Bone <kbd>B</kbd>
+      </button>
+      <span class="pool-counter" id="poolCounter">407 pins in pool</span>
+    </div>
+  </section>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="workspace" id="mainWorkspace">
+    <!-- VIEW 1: SPECIMEN COCKPIT (Used by Pin Grinder, Drop the Pin, Speed Blitz, and active Mock Exam) -->
+    <div class="cockpit" id="cockpitView">
+      <div class="viewport-panel">
+        <div class="viewport-hud">
+          <div class="hud-left">
+            <span class="badge badge-lab" id="hudLab">Lab 1</span>
+            <span class="badge badge-bone" id="hudBone">Hidden Specimen</span>
+            <span class="badge badge-cat" id="hudCat">Osteology</span>
+            <span class="hud-slide-ref" id="hudSlideRef">Slide 1 · Pin #1</span>
+          </div>
+          <div class="hud-right">
+            <button class="icon-btn" id="btnBookmark" title="Flag / Bookmark this pin [F]">☆ Flag</button>
+            <button class="icon-btn" id="btnOpenSlideAtlas" title="Inspect all pins on this specimen slide">🗺️ Inspect Slide</button>
+          </div>
+        </div>
+
+        <div class="timer-track" id="timerTrack">
+          <div class="timer-fill" id="timerFill"></div>
+        </div>
+
+        <div class="svg-stage-wrap" id="svgStageWrap">
+          <svg id="specimenSvg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"></svg>
+          <div class="stage-tooltip hidden" id="stageTooltip"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT CONTROL & INTELLIGENCE COLUMN -->
+      <aside class="control-panel">
+        <!-- Exam Progress Banner (visible only during 20-Pin Mock Exam) -->
+        <div class="exam-hud hidden" id="examHudBanner">
+          <div class="exam-hud-row">
+            <strong id="examStepLabel">Specimen 1 / 20</strong>
+            <span class="exam-target-pill">Target: 18/20 (90% Exemption)</span>
+          </div>
+          <div class="exam-dots" id="examDots"></div>
+        </div>
+
+        <!-- Timer + Streak Status -->
+        <div class="clock-card">
+          <div>
+            <div class="clock-caption" id="modeCaption">ACTIVE PIN RECALL</div>
+            <div class="clock-time" id="clockDisplay">30.0s</div>
+          </div>
+          <div class="session-mini-stats">
+            <div class="mini-stat">
+              <span class="ms-val" id="statStreak">0</span>
+              <span class="ms-lbl">Streak</span>
+            </div>
+            <div class="mini-stat">
+              <span class="ms-val" id="statSessionAcc">—</span>
+              <span class="ms-lbl">Session</span>
+            </div>
+            <div class="mini-stat">
+              <span class="ms-val" id="statAvgSpeed">—</span>
+              <span class="ms-lbl">Avg Speed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prompt & Interaction Box -->
+        <div class="prompt-card" id="promptCard">
+          <!-- Dynamically populated for Grind / Reverse / Blitz / Exam -->
+        </div>
+
+        <!-- Feedback & Anatomical Intelligence Card -->
+        <div class="feedback-card hidden" id="feedbackCard">
+          <!-- Populated immediately on answer/reveal -->
+        </div>
+
+        <!-- Live Weak-Spot Mini Queue / Confusion Alerts -->
+        <div class="radar-mini-card" id="radarMiniCard">
+          <div class="rm-header">
+            <span>🎯 Red-Zone Hit List</span>
+            <button class="link-btn" id="btnDrillRedNow">Drill Weak Spots →</button>
+          </div>
+          <div class="rm-list" id="redZoneMiniList">
+            <div class="rm-empty">Answer a few pins — slow (&gt;16s), missed, or confused landmarks will auto-cluster here.</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- VIEW 2: 20-PIN MOCK EXAM LAUNCHER & SCORECARD -->
+    <div class="full-view hidden" id="examSetupView"></div>
+
+    <!-- VIEW 3: TENDONS, MUSCLE GROOVES, SYLLABUS GAPS & VISUAL OCCLUSION -->
+    <div class="full-view hidden" id="gapsView"></div>
+
+    <!-- VIEW 4: 103-SLIDE INTERACTIVE SPECIMEN ATLAS & WEAK-SPOT RADAR -->
+    <div class="full-view hidden" id="atlasView"></div>
+
+    <!-- VIEW 5: BONE ID & DISCRIMINATION MODE (Whole Bone ID, Left vs Right, Vertebrae, Carpals, Tarsals) -->
+    <div class="full-view hidden" id="boneIdView"></div>
+  </main>
+
+  <!-- SLIDE X-RAY MODAL (Inspect all pins on any specimen slide at once) -->
+  <div class="modal-backdrop hidden" id="slideModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h3 id="modalTitle">Specimen Inspector</h3>
+          <p class="modal-sub" id="modalSub">Hover or click any pin on the specimen or list to highlight &amp; compare neighbors.</p>
+        </div>
+        <div class="modal-actions">
+          <button class="pill active" id="btnModalToggleLabels">Hide Answers</button>
+          <button class="pill" id="btnModalDrillSlide">⚡ Drill This Slide</button>
+          <button class="icon-btn" id="btnCloseModal">✕ Close</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-svg-wrap">
+          <svg id="modalSvg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"></svg>
+        </div>
+        <div class="modal-pin-list" id="modalPinList"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js?v=3"></script>
+</body>
+</html>
