@@ -6514,12 +6514,16 @@
       "answer": "Costal process",
       "rawAnswer": "COSTAL PROCESS",
       "synonyms": [
-        "costal process"
+        "costal process",
+        "costal process of lumbar vertebra",
+        "costiform process",
+        "processus costalis",
+        "processus costarius"
       ],
       "category": "bone",
-      "hook": "",
-      "cue": "",
-      "teacherNote": "",
+      "hook": "Embryological rib element fused to the lumbar vertebra! The true morphological transverse process is reduced to the accessory process (processus accessorius).",
+      "cue": "HIGH-YIELD EXAM TRAP: Lumbar vertebrae have NO true transverse process! This long lateral wing is the COSTAL PROCESS (processus costalis). Writing 'transverse process' on the JUMC practical exam will be marked WRONG!",
+      "teacherNote": "High-Yield JUMC Exam Trap: Lumbar vertebrae do NOT have a true transverse process! Embryologically, this long lateral projection is a fused rib element (= COSTAL PROCESS). The true transverse process is represented by the small ACCESSORY PROCESS (Pin 3). Writing 'transverse process' on the practical exam will lose the point!",
       "weight": 1.3,
       "wholeBone": false,
       "labelBox": {
@@ -16229,20 +16233,17 @@
       "bone": "Calcaneus",
       "lab": 5,
       "region": "Foot (Tarsus)",
-      "answer": "Calcaneal tuber",
+      "answer": "Sustentaculum tali",
       "rawAnswer": "CALCANEAL TUBER",
       "synonyms": [
-        "calcaneal tuber",
-        "calcaneal tubercle",
-        "calcaneal tuberosity",
-        "tuber calcanei",
-        "tubercle of calcaneus",
-        "tuberosity of calcaneus"
+        "sustentaculum tali",
+        "sustentaculum talii",
+        "talar shelf"
       ],
       "category": "tendon_muscle",
-      "hook": "Insertion of CALCANEAL (ACHILLES) TENDON (gastrocnemius + soleus + plantaris).",
-      "cue": "Massive posterior heel prominence of calcaneus.",
-      "teacherNote": "",
+      "hook": "Supports talar head + spring (plantar calcaneonavicular) ligament; its inferior groove lodges TENDON OF FLEXOR HALLUCIS LONGUS!",
+      "cue": "Horizontal shelf projecting MEDIALLY from upper calcaneus.",
+      "teacherNote": "Slide correction: Teacher key inverted pins 1 and 2. Pin 1 (yellow arrow) points to the medial shelf (sustentaculum tali). Standard anatomical spelling is single -i ('sustentaculum tali'); key wrote 'talii'.",
       "weight": 1.7,
       "wholeBone": false,
       "labelBox": {
@@ -16284,17 +16285,20 @@
       "bone": "Calcaneus",
       "lab": 5,
       "region": "Foot (Tarsus)",
-      "answer": "Sustentaculum tali",
+      "answer": "Calcaneal tuber",
       "rawAnswer": "SUSTENTACULUM TALII",
       "synonyms": [
-        "sustentaculum tali",
-        "sustentaculum talii",
-        "talar shelf"
+        "calcaneal tuber",
+        "calcaneal tubercle",
+        "calcaneal tuberosity",
+        "tuber calcanei",
+        "tubercle of calcaneus",
+        "tuberosity of calcaneus"
       ],
       "category": "tendon_muscle",
-      "hook": "Supports talar head + spring (plantar calcaneonavicular) ligament; its inferior groove lodges TENDON OF FLEXOR HALLUCIS LONGUS!",
-      "cue": "Horizontal shelf projecting MEDIALLY from upper calcaneus.",
-      "teacherNote": "Standard anatomical spelling is single -i ('sustentaculum tali'); key wrote 'talii'.",
+      "hook": "Insertion of CALCANEAL (ACHILLES) TENDON (gastrocnemius + soleus + plantaris).",
+      "cue": "Massive posterior heel prominence of calcaneus.",
+      "teacherNote": "Slide correction: Teacher key inverted pins 1 and 2. Pin 2 (blue arrow) points to the massive posterior heel tuberosity (calcaneal tuber / tuber calcanei).",
       "weight": 1.7,
       "wholeBone": false,
       "labelBox": {

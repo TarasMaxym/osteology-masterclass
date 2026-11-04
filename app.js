@@ -875,6 +875,14 @@
     }
 
     // 2. Check Opposite-Orientation / Antonym Trap BEFORE fuzzy matching!
+    if (item.answer && item.answer.toLowerCase() === "costal process" && uNorm.includes("transverse process")) {
+      return {
+        verdict: "confusion",
+        ok: false,
+        reason: 'High-Yield Exam Trap: Lumbar vertebrae have NO true transverse process! This lateral projection is an embryologically fused rib element (= COSTAL PROCESS). The true transverse process is the ACCESSORY PROCESS.',
+      };
+    }
+
     const conflict = detectAntonymConflict(uNorm, tNorms);
     if (conflict) {
       return {

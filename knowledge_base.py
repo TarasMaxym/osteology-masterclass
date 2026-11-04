@@ -69,6 +69,11 @@ SPECIFIC_PIN_FIXES = {
         ["deltoid tubercle", "deltoid ridge", "tuberositas deltoidea"],
         "Exam Orientation Trap: Although classified in textbooks as 'anterolateral', the deltoid tuberosity forms the prominent rough lateral contour visible in profile even from this POSTERIOR view! The teacher specifically pinned both mid-shaft structures on this slide: Pin 1 = Sulcus of radial nerve (posterior), Pin 2 = Deltoid tuberosity (lateral border).",
     ),
+    ("BONES", 21, 1): (
+        "Costal process",
+        ["costal process", "processus costalis", "costiform process", "costal process of lumbar vertebra", "processus costarius"],
+        "High-Yield JUMC Exam Trap: Lumbar vertebrae do NOT have a true transverse process! Embryologically, this long lateral projection is a fused rib element (= COSTAL PROCESS). The true transverse process is represented by the small ACCESSORY PROCESS (Pin 3). Writing 'transverse process' on the practical exam will lose the point!",
+    ),
     ("BONES", 21, 2): (
         "Mammillary process",
         ["mammilary process", "processus mamillaris"],
@@ -114,10 +119,15 @@ SPECIFIC_PIN_FIXES = {
         ["sustentaculum talii", "talar shelf"],
         "Standard anatomical spelling is single -i ('sustentaculum tali'); key wrote 'talii'.",
     ),
-    ("BONES", 74, 2): (
+    ("BONES", 74, 1): (
         "Sustentaculum tali",
         ["sustentaculum talii", "talar shelf"],
-        "Standard anatomical spelling is single -i ('sustentaculum tali'); key wrote 'talii'.",
+        "Slide correction: Teacher key inverted pins 1 and 2. Pin 1 (yellow arrow) points to the medial shelf (sustentaculum tali). Standard anatomical spelling is single -i ('sustentaculum tali'); key wrote 'talii'.",
+    ),
+    ("BONES", 74, 2): (
+        "Calcaneal tuber",
+        ["calcaneal tuberosity", "tuber calcanei", "tuberosity of calcaneus"],
+        "Slide correction: Teacher key inverted pins 1 and 2. Pin 2 (blue arrow) points to the massive posterior heel tuberosity (calcaneal tuber / tuber calcanei).",
     ),
     ("BONES", 82, 8): (
         "Sacral hiatus",
@@ -165,6 +175,12 @@ SPECIFIC_PIN_FIXES = {
 # category: "bone" (pure osteology), "tendon_muscle" (groove/tuberosity for muscle/tendon),
 #           "ligament" (ligament attachment), "neurovascular" (foramen/groove for nerve/vessel/sinus)
 LANDMARK_INTEL = {
+    "costal process": {
+        "category": "bone",
+        "hook": "Embryological rib element fused to the lumbar vertebra! The true morphological transverse process is reduced to the accessory process (processus accessorius).",
+        "cue": "HIGH-YIELD EXAM TRAP: Lumbar vertebrae have NO true transverse process! This long lateral wing is the COSTAL PROCESS (processus costalis). Writing 'transverse process' on the JUMC practical exam will be marked WRONG!",
+        "synonyms": ["costiform process", "processus costalis", "processus costarius"],
+    },
     "scalene tubercle": {
         "category": "tendon_muscle",
         "hook": "Insertion of anterior scalene muscle; separates subclavian vein (anterior) from subclavian artery & lower trunk of brachial plexus (posterior).",
